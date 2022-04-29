@@ -23,9 +23,9 @@ test('draw button displays choices', async () => {
     await driver.sleep(1000)
 
     const choices = await driver.findElement(By.xpath('//*[@id="choices"]'))
-    const displayed = choices.isDisplayed();
+    const displayed = await choices.isDisplayed();
     
-    expect(displayed).toBeTruthy();
+    expect(displayed).toBe(true);
 })
 
 test('add to duo', async () => {
@@ -36,7 +36,7 @@ test('add to duo', async () => {
     await driver.sleep(1000)
 
     const myBot = await driver.findElement(By.xpath('//*[@class="bot-card outline"]'))
-    const displayed = myBot.isDisplayed();
+    const displayed = await myBot.isDisplayed();
     
-    expect(displayed).toBeTruthy();
+    expect(displayed).toBe(true);
 })
