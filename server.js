@@ -6,7 +6,7 @@ const {shuffleArray} = require('./utils')
 
 var Rollbar = require('rollbar')
 var rollbar = new Rollbar({
-  accessToken: '1456ab494d814a4f8fbc48ff54b1c0a8',
+  accessToken: '59f1eefb8fb142909922f1859edbed79',
   captureUncaught: true,
   captureUnhandledRejections: true,
 });
@@ -17,6 +17,7 @@ app.use(express.json())
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, './public/index.html'))
+    rollbar.info('html file got served!')
 })
 
 app.get('/js', (req, res) => {
@@ -31,7 +32,7 @@ app.get('/api/robots', (req, res) => {
     try {
         res.status(200).send(botsArr)
     } catch (error) {
-        console.log('ERROR GETTING BOTS', error)
+        rollbar.error('ERROR GETTING BOTS', error)
         res.sendStatus(400)
     }
 })
@@ -43,7 +44,7 @@ app.get('/api/robots/five', (req, res) => {
         let compDuo = shuffled.slice(6, 8)
         res.status(200).send({choices, compDuo})
     } catch (error) {
-        console.log('ERROR GETTING FIVE BOTS', error)
+        rollbar.error('ERROR GETTING FIVE BOTS', error)
         res.sendStatus(400)
     }
 })
@@ -74,7 +75,7 @@ app.post('/api/duel', (req, res) => {
             res.status(200).send('You won!')
         }
     } catch (error) {
-        console.log('ERROR DUELING', error)
+        rollbar.error('ERROR DUELING', error)
         res.sendStatus(400)
     }
 })
@@ -83,7 +84,7 @@ app.get('/api/player', (req, res) => {
     try {
         res.status(200).send(playerRecord)
     } catch (error) {
-        console.log('ERROR GETTING PLAYER STATS', error)
+        rollbar.error('ERROR GETTING PLAYER STATS', error)
         res.sendStatus(400)
     }
 })
